@@ -1,4 +1,4 @@
-#Flow Android client
+#Flow Android client ![](https://circleci.com/gh/srmds/Flow-Android-client/tree/master.svg?style=shield&circle-token=982140173ef2b98794c97ed9cfa17d90cddc17bf
 
 Android Client that connects and persists data retrieved from the [Flow API](https://github.com/srmds/FlowAPI)
 
