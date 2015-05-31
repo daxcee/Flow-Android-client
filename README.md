@@ -21,12 +21,10 @@ Tested images:
 - `Google Nexus 6 - 5.1.0 - API 22`
 
 *ARM Translation Installer v1.1*
-[download](http://filetrip.net/dl?4SUOrdcMRv)
+[download](https://www.dropbox.com/s/wpswh269snsw2ie/Genymotion-ARM-Translation_v1.1.zip?dl=1)
 
 *Android 5.1 image - gapps-L-4-21-15*
-[download](http://downloadandroidrom.com/file/gapps/5.1/gapps-L-4-21-15.zip)
-
-[more info](https://gist.github.com/wbroek/9321145)
+[download](https://www.dropbox.com/s/9rih5iljebux0f4/gapps-L-4-21-15.zip?dl=1)
 
 ### Installlation steps
 
