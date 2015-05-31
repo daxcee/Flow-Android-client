@@ -21,10 +21,10 @@ Tested images:
 - `Google Nexus 6 - 5.1.0 - API 22`
 
 *ARM Translation Installer v1.1*
-[download](https://www.dropbox.com/s/wpswh269snsw2ie/Genymotion-ARM-Translation_v1.1.zip?dl=1)
+[download](https://www.androidfilehost.com/?fid=23252070760974384)
 
 *Android 5.1 image - gapps-L-4-21-15*
-[download](https://www.dropbox.com/s/9rih5iljebux0f4/gapps-L-4-21-15.zip?dl=1)
+[download](https://www.androidfilehost.com/?fid=96039337900114811)
 
 ### Installlation steps
 
@@ -37,9 +37,9 @@ close the emulator and start a new instance of the virtual device.
 drag & drop the gapps-version.zip onto the Genymotion VM window. When finished,
 close the emulator and start a new instance of the virtual device. 
  
-- Open the Google Play Store. Signing via email.
+- Open the Google Play Store. Sign-in via email.
 
-- In Play Store got to apps, update any outdated app. When finished,
+- In Play Store go to apps, update any outdated app. When finished,
 close the emulator and start a new instance of the virtual device. 
 
 Note that in the install process, there could be notifications of `google apps not working`, ignore those messages. 
