@@ -1,5 +1,7 @@
 #Flow Android client
 
+Android Client that connects and persists data retrieved from the [Flow API](https://github.com/srmds/FlowAPI)
+
 
 ##Prerequisites
 
