@@ -1,12 +1,18 @@
 package models;
 
+import android.net.ParseException;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 //https://github.com/srmds/Flow-API/blob/master/models/event.js
 public class Event {
 
     private String id;
-    private Date date;
+    private String date;
     private String title;
     private String venue;
     private String city;
@@ -14,8 +20,11 @@ public class Event {
 
     public Event(){}
 
-    public Event(String eventId){}
-
+    public Event(String eventId, String title, String city){
+        setId(eventId);
+        setTitle(title);
+        setCity(city);
+    }
 
     public String getId() {
         return id;
@@ -23,14 +32,6 @@ public class Event {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getTitle() {
@@ -65,12 +66,30 @@ public class Event {
         this.country = country;
     }
 
-    public Date createFormattedDate(String date){
-        return null;
+    public String getDateStr() {
+        return date;
     }
 
-    public String getFormattedDate(Date date) {
-        return "";
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        SimpleDateFormat targetFormat = new SimpleDateFormat("E dd MMM yyyy", Locale.US); //Woe 15 Mei 2015
+        String formattedDate = null;
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(getDateStr());
+            formattedDate = targetFormat.format(convertedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(formattedDate);
+
+        return convertedDate;
     }
 
 }

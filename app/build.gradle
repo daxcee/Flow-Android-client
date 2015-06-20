@@ -21,7 +21,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.flow.flow.app"
+        applicationId "com.flow.app"
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1

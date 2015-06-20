@@ -4,6 +4,8 @@ import Utils.Constants;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import static Utils.Constants.*;
+import static Utils.Constants.EventEntityAttributes.*;
 
 public class PersistenceManager extends SQLiteOpenHelper {
 
@@ -18,14 +20,17 @@ public class PersistenceManager extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableQuery = "Create table " + Constants.EventEntityName + "("
-                + Constants.EventEntityAttributes.id.toString() + " String primary key," +
-                Constants.EventEntityAttributes.title.toString() + " TEXT," +
-                Constants.EventEntityAttributes.date.toString() + " DATE" +
-                Constants.EventEntityAttributes.city.toString() + " TEXT" +
-                Constants.EventEntityAttributes.venue.toString() + " TEXT" +
-                Constants.EventEntityAttributes.country.toString() + " TEXT" +
-                Constants.EventEntityAttributes.city + " TEXT" + ")";
+
+        String attrTxtType = " TEXT";
+        String createTableQuery =
+                String.format("Create table %s (%s primary key, %s, %s, %s, %s, %s)",
+                    EventEntityName,
+                        id.toString() + attrTxtType,
+                        title.toString() + attrTxtType,
+                        date.toString()+ attrTxtType,
+                        city.toString()+ attrTxtType,
+                        venue.toString()+ attrTxtType,
+                        country.toString() + attrTxtType);
 
         db.execSQL(createTableQuery);
     }
