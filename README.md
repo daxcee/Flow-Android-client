@@ -43,3 +43,10 @@ close the emulator and start a new instance of the virtual device.
 close the emulator and start a new instance of the virtual device. 
 
 Note that in the install process, there could be notifications of `google apps not working`, ignore those messages. 
+
+### Build & Run
+
+This project uses a [Gradle SDK Manager Plugin](https://github.com/JakeWharton/sdk-manager-plugin). On initial run, the Android SDK needs to be downloaded first, by running:
+
+	$ ./gradlew clean assemble
+
