@@ -1,7 +1,23 @@
 package Replicator;
 
-/**
- * Created by c0d3 on 21/06/15.
- */
-public class RemoteReplicator {
+import Utils.Constants;
+import Utils.HTTPClient;
+
+public class RemoteReplicator implements ReplicatorInterface {
+
+    private HTTPClient pullTask;
+
+    @Override
+    public void pull() {
+        pullTask = new HTTPClient();
+        String[] params = new String[1];
+        params[0] = Constants.FlowAPIEndpoints.events.toString();
+
+        pullTask.execute(params);
+    }
+
+    @Override
+    public void push() {
+        //TODO
+    }
 }

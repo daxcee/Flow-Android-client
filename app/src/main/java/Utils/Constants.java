@@ -35,4 +35,30 @@ public final class Constants {
         }
 
     }
+
+    private static final String APIHost = "https://flow-api.herokuapp.com";
+    private static final String APIBasePath = "/api/v1/";
+    private static final String pikachu = "?apikey=2g1ddDNAF2RKdriuzGVZnZ";
+
+    public enum FlowAPIEndpoints {
+        events(APIHost + APIBasePath + "events" + pikachu),
+        artists(APIHost + APIBasePath + "artists"+ pikachu),
+        albums(APIHost + APIBasePath + "albums"+ pikachu),
+        tracks(APIHost + APIBasePath + "tracks"+ pikachu),
+        genres(APIHost + APIBasePath + "genres"+ pikachu);
+
+        private final String name;
+
+        FlowAPIEndpoints(String s) {
+            name = s;
+        }
+
+        public boolean equalsName(String otherName){
+            return (otherName != null) && name.equals(otherName);
+        }
+
+        public String toString(){
+            return name;
+        }
+    }
 }
