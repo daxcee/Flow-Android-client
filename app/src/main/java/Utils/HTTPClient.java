@@ -1,5 +1,6 @@
 package Utils;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import java.io.BufferedReader;
@@ -12,6 +13,11 @@ import java.net.URL;
 public class HTTPClient extends AsyncTask<String, Void, String> {
 
     HttpURLConnection httpConnection;
+    private AsyncTaskListener<String> callback;
+
+    public HTTPClient(AsyncTaskListener callback){
+        this.callback = callback;
+    }
 
     @Override
     protected String doInBackground(String... urls) {
@@ -35,7 +41,7 @@ public class HTTPClient extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if(result != null) {
-            Log.e("res: ", result);
+            callback.onComplete(result);
         }
     }
 
