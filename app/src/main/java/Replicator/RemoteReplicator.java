@@ -1,9 +1,8 @@
 package Replicator;
 
 import EntityAPI.EventsAPI.EventAPI;
-import Utils.AsyncTaskListener;
 import Utils.Constants;
-import Utils.HTTPClient;
+import HTTPClient.HTTPClient;
 import android.util.Log;
 
 public class RemoteReplicator implements AsyncTaskListener<String>,ReplicatorInterface {

@@ -1,18 +1,13 @@
-package Utils;
+package HTTPClient;
 
-import android.content.Intent;
-import android.os.AsyncTask;
+import Replicator.AsyncTaskListener;
 import android.util.Log;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HTTPClient extends AsyncTask<String, Void, String> {
+public class HTTPClient extends AbstractHTTPClient {
 
-    HttpURLConnection httpConnection;
     private AsyncTaskListener<String> callback;
 
     public HTTPClient(AsyncTaskListener callback){
@@ -25,7 +20,7 @@ public class HTTPClient extends AsyncTask<String, Void, String> {
 
         try {
             URL url = new URL(urls[0]);
-            httpConnection = (HttpURLConnection) url.openConnection();
+            super.httpConnection = (HttpURLConnection) url.openConnection();
             handleResponseCode(getResponseCode());
             result = execute();
 
@@ -43,48 +38,6 @@ public class HTTPClient extends AsyncTask<String, Void, String> {
         if(result != null) {
             callback.onComplete(result);
         }
-    }
-
-    private String execute() throws IOException {
-        BufferedReader reader = null;
-        InputStream inputStream = null;
-        String result = null;
-
-        httpConnection.connect();
-
-        try {
-            inputStream = httpConnection.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-
-            result = sb.toString();
-
-        } finally {
-            if (inputStream != null)
-                inputStream.close();
-
-            if (reader != null)
-                reader.close();
-        }
-
-        return result;
-    }
-
-    protected int getResponseCode() {
-        int responseCode = 0;
-        try {
-            responseCode = httpConnection.getResponseCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return responseCode;
     }
 
     private void handleResponseCode(int responseCode){
