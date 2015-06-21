@@ -1,6 +1,5 @@
 package EntityAPI.EventsAPI;
 
-
 import models.Event;
 
 import java.util.ArrayList;

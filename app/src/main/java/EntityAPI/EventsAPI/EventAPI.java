@@ -2,16 +2,19 @@ package EntityAPI.EventsAPI;
 
 import EntityAPI.PersistenceManager;
 import Utils.Constants;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 import models.Event;
 import java.util.*;
 import static Utils.Constants.*;
 import static Utils.Constants.EventEntityAttributes.*;
 
-public class EventAPI implements EventAPIInterface{
+public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
 
     private PersistenceManager persistenceManager;
 
@@ -95,5 +98,11 @@ public class EventAPI implements EventAPIInterface{
     @Override
     public void deleteAll() {
         //TODO
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Toast.makeText(context, "Broadcast Received", Toast.LENGTH_LONG).show();
+
     }
 }
