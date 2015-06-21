@@ -1,7 +1,5 @@
 package Utils;
 
-/**
- * Created by c0d3 on 21/06/15.
- */
-public interface AsyncTaskListener {
+public interface AsyncTaskListener<T> {
+    public void onComplete(T result);
 }

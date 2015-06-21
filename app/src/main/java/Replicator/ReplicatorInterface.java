@@ -1,6 +1,6 @@
 package Replicator;
 
-public interface ReplicatorInterface {
+public interface ReplicatorInterface  {
     void pull();
     void push();
 }
