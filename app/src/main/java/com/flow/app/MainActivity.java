@@ -2,8 +2,13 @@ package com.flow.app;
 
 import EntityAPI.EventsAPI.EventAPI;
 import Replicator.RemoteReplicator;
+import Utils.Constants;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import models.Event;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -18,11 +23,18 @@ public class MainActivity extends Activity {
         this.eventAPI = new EventAPI(this);
         this.replicator = new RemoteReplicator(eventAPI);
 
-        getEvents();
+        pullRemoteData();
+    }
+
+    private void pullRemoteData() {
+        replicator.pull();
     }
 
     private void getEvents(){
-        replicator.pull();
+        ArrayList<Event> events = eventAPI.getAll();
+        for(Event event : events) {
+            Log.e("retrieved item: ", event.getTitle());
+        }
     }
 
 }

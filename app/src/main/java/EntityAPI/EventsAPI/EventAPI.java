@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 import models.Event;
 import java.util.*;
@@ -35,6 +36,31 @@ public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
         values.put(date.toString(), event.getDateStr());
 
         db.insert(EventEntityName, null, values);
+        db.close();
+
+        Log.e("Saved item: ", event.getTitle());
+    }
+
+    @Override
+    public void saveEvents(ArrayList<Event> events) {
+
+        SQLiteDatabase db = persistenceManager.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        for(Event event:events) {
+
+            values.put(id.toString(), event.getId());
+            values.put(title.toString(), event.getTitle());
+            values.put(venue.toString(), event.getVenue());
+            values.put(city.toString(), event.getCity());
+            values.put(country.toString(), event.getCountry());
+            values.put(date.toString(), event.getDateStr());
+
+            db.insert(EventEntityName, null, values);
+
+            Log.e("Saved item: ", event.getTitle());
+        }
+
         db.close();
     }
 
