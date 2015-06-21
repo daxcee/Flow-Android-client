@@ -3,7 +3,6 @@ package Replicator;
 import EntityAPI.EventsAPI.EventAPI;
 import Utils.Constants;
 import HTTPClient.HTTPClient;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -35,7 +34,6 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
 
     @Override
     public void onComplete(String result) {
-        Log.e("FINAL RES: ", result);
         processData(result);
     }
 
@@ -50,4 +48,5 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
 
         eventAPI.saveEvents(events);
     }
+
 }

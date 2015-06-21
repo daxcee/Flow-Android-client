@@ -2,18 +2,17 @@ package com.flow.app;
 
 import EntityAPI.EventsAPI.EventAPI;
 import Replicator.RemoteReplicator;
-import Utils.Constants;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import models.Event;
-
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
     private EventAPI eventAPI;
     private RemoteReplicator replicator;
+    private String LOG_TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,12 @@ public class MainActivity extends Activity {
         this.eventAPI = new EventAPI(this);
         this.replicator = new RemoteReplicator(eventAPI);
 
-        pullRemoteData();
+        if(eventAPI.getAll().size() == 0) {
+            pullRemoteData();
+
+        } else {
+            getEvents();
+        }
     }
 
     private void pullRemoteData() {
@@ -32,8 +36,9 @@ public class MainActivity extends Activity {
 
     private void getEvents(){
         ArrayList<Event> events = eventAPI.getAll();
+
         for(Event event : events) {
-            Log.e("retrieved item: ", event.getTitle());
+            Log.e(LOG_TAG, event.getTitle());
         }
     }
 
