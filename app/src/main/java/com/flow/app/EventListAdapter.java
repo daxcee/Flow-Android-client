@@ -1,6 +1,5 @@
 package com.flow.app;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import models.Event;
-
 import java.util.ArrayList;
-
 import static com.flow.app.R.*;
 
 class EventListAdapter  extends ArrayAdapter<Event> {
-
-    private ArrayList<Event> events;
-
-    public EventListAdapter(Context context, int textViewResourceId, ArrayList<Event> events) {
-        super(context, textViewResourceId, events);
-        this.events = events;
-    }
 
     public EventListAdapter(Context context, ArrayList<Event> values) {
         super(context, android.R.layout.simple_list_item_1,values); // change here
@@ -29,7 +19,6 @@ class EventListAdapter  extends ArrayAdapter<Event> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View eventCell = convertView;
 
         if (eventCell == null) {
