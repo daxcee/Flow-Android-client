@@ -60,4 +60,24 @@ public final class Constants {
             return name;
         }
     }
+
+    public enum IntentMessages{
+        replication_finished("com.flow.app.replication_finished"),
+        purge_all("com.flow.app.purge_all");
+
+        private final String name;
+
+        IntentMessages(String s) {
+            name = s;
+        }
+
+        public boolean equalsName(String otherName){
+            return (otherName != null) && name.equals(otherName);
+        }
+
+        public String toString(){
+            return name;
+        }
+
+    }
 }
