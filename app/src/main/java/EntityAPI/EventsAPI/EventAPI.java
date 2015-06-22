@@ -105,7 +105,9 @@ public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
 
                 event.setId(cursor.getString(0));
                 event.setTitle(cursor.getString(1));
-                event.setCity(cursor.getString(2));
+                event.setCity(cursor.getString(3));
+                event.setVenue(cursor.getString(4));
+                event.setDate(cursor.getString(2));
 
                 eventsList.add(event);
             } while (cursor.moveToNext());

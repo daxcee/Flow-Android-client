@@ -5,7 +5,10 @@ import Replicator.RemoteReplicator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.*;
 import models.Event;
+
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -22,12 +25,21 @@ public class MainActivity extends Activity {
         this.eventAPI = new EventAPI(this);
         this.replicator = new RemoteReplicator(eventAPI);
 
-        if(eventAPI.getAll().size() == 0) {
-            pullRemoteData();
+        ListAdapter eventListAdapter = new EventListAdapter(this, eventAPI.getAll());
 
-        } else {
-            getEvents();
-        }
+        ListView eventListView = (ListView) findViewById(R.id.listView);
+        eventListView.setAdapter(eventListAdapter);
+
+        eventListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Event selectedEvent = (Event) adapterView.getItemAtPosition(i);
+                        Toast.makeText(MainActivity.this,selectedEvent.getTitle(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
     }
 
     private void pullRemoteData() {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1" android:id="@+id/event_cell">
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:background="@drawable/back"
+			android:layout_height="match_parent" android:layout_gravity="center_horizontal"
+			android:id="@+id/event_details_placeholder" android:weightSum="1">
+
+		<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/event_cover_imageview" android:src="@mipmap/event_placeholder"
+				android:contentDescription="@string/event_cover_description" android:layout_gravity="top"
+				android:layout_marginTop="-14dp" android:paddingRight="2dp"
+				android:paddingLeft="2dp"/>
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Het Transportbedrijf"
+				android:id="@+id/event_venue_textview" android:textSize="12pt" android:textStyle="bold"
+				android:layout_marginLeft="10dp"/>
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Rotterdam"
+				android:id="@+id/event_city_textview" android:textSize="12pt"
+				android:textIsSelectable="false" android:paddingBottom="15dp" android:textStyle="bold"
+				android:layout_marginLeft="10dp"/>
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="New Text"
+				android:id="@+id/event_title_textview" android:layout_marginLeft="10dp" android:textSize="12pt"
+				android:paddingBottom="10dp"/>
+	</LinearLayout>
+</LinearLayout>

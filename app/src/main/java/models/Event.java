@@ -94,4 +94,8 @@ public class Event {
         return convertedDate;
     }
 
+    @Override
+    public String toString() {
+        return getTitle() + " - " + getCity() + " - " + getCountry();
+    }
 }
