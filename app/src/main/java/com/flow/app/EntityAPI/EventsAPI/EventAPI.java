@@ -1,25 +1,26 @@
-package EntityAPI.EventsAPI;
+package com.flow.app.EntityAPI.EventsAPI;
 
-import EntityAPI.PersistenceManager;
-import Utils.Constants;
-import android.content.BroadcastReceiver;
+import com.flow.app.EntityAPI.PersistenceManager;
+import com.flow.app.Utils.Constants;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
-import models.Event;
-import java.util.*;
-import static Utils.Constants.*;
-import static Utils.Constants.EventEntityAttributes.*;
+import com.flow.app.Model.Event;
+import java.util.ArrayList;
+import static com.flow.app.Utils.Constants.EventEntityAttributes.*;
+import static com.flow.app.Utils.Constants.EventEntityName;
 
-public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
+
+public class EventAPI implements EventAPIInterface {
 
     private PersistenceManager persistenceManager;
+    private Context context;
 
     public EventAPI(Context context){
+        this.context = context;
         this.persistenceManager = new PersistenceManager(context);
     }
 
@@ -36,16 +37,16 @@ public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
         values.put(date.toString(), event.getDateStr());
 
         db.insert(EventEntityName, null, values);
-        db.close();
 
-        Log.e("Saved item: ", event.getTitle());
+        db.close();
     }
 
     @Override
     public void saveEvents(ArrayList<Event> events) {
-
         SQLiteDatabase db = persistenceManager.getWritableDatabase();
         ContentValues values = new ContentValues();
+        Intent intent = new Intent();
+        intent.setAction(Constants.IntentMessages.replication_finished.toString());
 
         for(Event event:events) {
 
@@ -62,6 +63,7 @@ public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
         }
 
         db.close();
+        context.sendBroadcast(intent);
     }
 
     @Override
@@ -125,12 +127,12 @@ public class EventAPI extends BroadcastReceiver implements EventAPIInterface {
 
     @Override
     public void deleteAll() {
-        //TODO
-    }
+        SQLiteDatabase db = persistenceManager.getWritableDatabase();
+        db.execSQL(String.format("DELETE FROM %s", Constants.EventEntityName));
+        db.close();
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Broadcast Received", Toast.LENGTH_LONG).show();
-
+        Intent intent = new Intent();
+        intent.setAction(Constants.IntentMessages.purge_all.toString());
+        context.sendBroadcast(intent);
     }
 }

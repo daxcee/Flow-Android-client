@@ -1,4 +1,4 @@
-package models;
+package com.flow.app.Model;
 
 import android.net.ParseException;
 import com.google.gson.annotations.SerializedName;

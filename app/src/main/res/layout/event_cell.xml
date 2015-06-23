@@ -13,8 +13,8 @@
 
 		<ImageView
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/event_cover_imageview" android:src="@mipmap/event_placeholder"
+				android:layout_height="120dp"
+				android:id="@+id/event_cover_imageview" android:src="@mipmap/placeholder_event"
 				android:contentDescription="@string/event_cover_description" android:layout_gravity="top"
 				android:layout_marginTop="-14dp" android:paddingRight="2dp"
 				android:paddingLeft="2dp"/>

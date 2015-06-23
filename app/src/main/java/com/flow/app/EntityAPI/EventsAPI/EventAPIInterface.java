@@ -1,10 +1,10 @@
-package EntityAPI.EventsAPI;
+package com.flow.app.EntityAPI.EventsAPI;
 
-import models.Event;
+import com.flow.app.Model.Event;
 
 import java.util.ArrayList;
 
-public interface EventAPIInterface {
+public interface EventAPIInterface  {
 
     void saveEvent(Event event);
 
