@@ -1,12 +1,12 @@
-package Replicator;
+package com.flow.app.Replicator;
 
-import EntityAPI.EventsAPI.EventAPI;
-import Utils.Constants;
-import HTTPClient.HTTPClient;
+import com.flow.app.EntityAPI.EventsAPI.EventAPI;
+import com.flow.app.Utils.Constants;
+import com.flow.app.HTTPClient.HTTPClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import models.Event;
+import com.flow.app.Model.Event;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 

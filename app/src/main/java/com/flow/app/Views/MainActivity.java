@@ -1,8 +1,5 @@
-package com.flow.app;
+package com.flow.app.Views;
 
-import EntityAPI.EventsAPI.EventAPI;
-import Replicator.RemoteReplicator;
-import Utils.Constants;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,20 +11,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import models.Event;
+import com.flow.app.EntityAPI.EventsAPI.EventAPI;
+import com.flow.app.R;
+import com.flow.app.Replicator.RemoteReplicator;
+import com.flow.app.Utils.Constants;
+import com.flow.app.Model.Event;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity implements ListViewInterface {
 
     private EventAPI eventAPI;
     private RemoteReplicator replicator;
     private BroadcastReceiver broadcastReceiver;
     private ArrayList<Event> eventArrayList;
-    private ListAdapter eventListAdapter;
+    private EventListAdapter eventListAdapter;
     private final String LOG_TAG = "MainActivity";
+    private ListView eventListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,8 @@ public class MainActivity extends Activity  {
         initListView();
     }
 
-    private void initReceivers(){
+    @Override
+    public void initReceivers(){
         IntentFilter replicateFilter = new IntentFilter(Constants.IntentMessages.replication_finished.toString());
         IntentFilter purgefilter = new IntentFilter(Constants.IntentMessages.purge_all.toString());
 
@@ -98,7 +100,6 @@ public class MainActivity extends Activity  {
 
         if (id == R.id.action_settings) {
             eventAPI.deleteAll();
-            eventArrayList.clear();
 
             return true;
         }
@@ -106,9 +107,10 @@ public class MainActivity extends Activity  {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initListView() {
+    @Override
+    public void initListView() {
         eventListAdapter = new EventListAdapter(this, eventArrayList);
-        ListView eventListView = (ListView) findViewById(R.id.listView);
+        eventListView = (ListView) findViewById(R.id.listView);
         eventListView.setAdapter(eventListAdapter);
 
         eventListView.setOnItemClickListener(
@@ -122,17 +124,23 @@ public class MainActivity extends Activity  {
         );
     }
 
-    private void pullRemoteData() {
+    @Override
+    public void pullRemoteData() {
         replicator.pull();
     }
 
-    private void refreshListViewData() {
-
-        synchronized(this){
-            eventArrayList = eventAPI.getAll();
-            eventListAdapter = new EventListAdapter(this, eventArrayList);
-
-            //TODO notify all to trigger listview refresh
-        }
+    @Override
+    public void refreshListViewData() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                eventArrayList.clear();
+                eventArrayList.addAll(eventAPI.getAll());
+                eventListAdapter.notifyDataSetChanged();
+                eventListView.invalidateViews();
+                eventListView.refreshDrawableState();
+                System.out.println("Total is: " + eventAPI.getAll().size());
+            }
+        });
     }
+
 }

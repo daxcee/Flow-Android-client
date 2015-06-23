@@ -1,4 +1,4 @@
-package com.flow.app;
+package com.flow.app.Views;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import models.Event;
+import com.flow.app.Model.Event;
 import java.util.ArrayList;
 import static com.flow.app.R.*;
 

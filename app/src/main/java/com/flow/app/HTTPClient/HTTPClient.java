@@ -1,6 +1,6 @@
-package HTTPClient;
+package com.flow.app.HTTPClient;
 
-import Replicator.AsyncTaskListener;
+import com.flow.app.Replicator.AsyncTaskListener;
 import android.util.Log;
 import java.io.IOException;
 import java.net.HttpURLConnection;

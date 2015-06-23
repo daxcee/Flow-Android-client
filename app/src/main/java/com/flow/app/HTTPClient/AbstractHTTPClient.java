@@ -1,4 +1,4 @@
-package HTTPClient;
+package com.flow.app.HTTPClient;
 
 import android.os.AsyncTask;
 import java.io.*;

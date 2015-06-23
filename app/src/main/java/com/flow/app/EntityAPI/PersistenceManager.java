@@ -1,11 +1,11 @@
-package EntityAPI;
+package com.flow.app.EntityAPI;
 
-import Utils.Constants;
+import com.flow.app.Utils.Constants;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static Utils.Constants.*;
-import static Utils.Constants.EventEntityAttributes.*;
+import static com.flow.app.Utils.Constants.*;
+import static com.flow.app.Utils.Constants.EventEntityAttributes.*;
 
 public class PersistenceManager extends SQLiteOpenHelper {
 

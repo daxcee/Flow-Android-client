@@ -1,4 +1,4 @@
-package Utils;
+package com.flow.app.Utils;
 
 public final class Constants {
 
@@ -38,9 +38,10 @@ public final class Constants {
 
     private static final String APIHost = "https://flow-api.herokuapp.com";
     private static final String APIBasePath = "/api/v1/";
+    public static String key = "?apikey=2g1ddDNAF2RKdriuzGVZnZ";
 
     public enum FlowAPIEndpoints {
-        events(APIHost + APIBasePath + "events"),
+        events(APIHost + APIBasePath + "events" + key),
         artists(APIHost + APIBasePath + "artists"),
         albums(APIHost + APIBasePath + "albums"),
         tracks(APIHost + APIBasePath + "tracks"),

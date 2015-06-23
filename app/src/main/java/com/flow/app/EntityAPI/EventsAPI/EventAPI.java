@@ -1,21 +1,20 @@
-package EntityAPI.EventsAPI;
+package com.flow.app.EntityAPI.EventsAPI;
 
-import EntityAPI.PersistenceManager;
-import Utils.Constants;
+import com.flow.app.EntityAPI.PersistenceManager;
+import com.flow.app.Utils.Constants;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import models.Event;
-
+import com.flow.app.Model.Event;
 import java.util.ArrayList;
+import static com.flow.app.Utils.Constants.EventEntityAttributes.*;
+import static com.flow.app.Utils.Constants.EventEntityName;
 
-import static Utils.Constants.EventEntityAttributes.*;
-import static Utils.Constants.EventEntityName;
 
-public class EventAPI  implements EventAPIInterface {
+public class EventAPI implements EventAPIInterface {
 
     private PersistenceManager persistenceManager;
     private Context context;
@@ -36,6 +35,7 @@ public class EventAPI  implements EventAPIInterface {
         values.put(city.toString(), event.getCity());
         values.put(country.toString(), event.getCountry());
         values.put(date.toString(), event.getDateStr());
+
         db.insert(EventEntityName, null, values);
 
         db.close();
@@ -58,8 +58,9 @@ public class EventAPI  implements EventAPIInterface {
             db.insert(EventEntityName, null, values);
 
             Log.e("Saved item: ", event.getTitle());
-        }
 
+
+        }
         Intent intent = new Intent();
         intent.setAction(Constants.IntentMessages.replication_finished.toString());
         context.sendBroadcast(intent);
@@ -136,5 +137,4 @@ public class EventAPI  implements EventAPIInterface {
         intent.setAction(Constants.IntentMessages.purge_all.toString());
         context.sendBroadcast(intent);
     }
-
 }
