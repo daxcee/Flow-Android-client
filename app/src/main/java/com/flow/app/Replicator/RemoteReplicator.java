@@ -1,14 +1,15 @@
 package com.flow.app.Replicator;
 
 import com.flow.app.EntityAPI.EventsAPI.EventAPI;
-import com.flow.app.Utils.Constants;
 import com.flow.app.HTTPClient.HTTPClient;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.flow.app.Model.Event;
-import java.lang.reflect.Type;
+import com.flow.app.Utils.Constants;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
+import static com.flow.app.Utils.Constants.EventEntityAttributes.title;
+
 
 public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorInterface {
 
@@ -38,15 +39,35 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
     }
 
     private void processData(String response){
+        JSONArray events;
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("dd-mm-yyyy");
-        Gson gson = gsonBuilder.create();
+        try {
+            JSONObject jsonObj = new JSONObject(response);
+            events = jsonObj.getJSONArray("result");
 
-        Type listType = new TypeToken<ArrayList<Event>>(){}.getType();
-        ArrayList<Event> events = gson.fromJson(response, listType);
+            if(events != null) {
+                ArrayList<Event> eventList = new ArrayList<Event>();
 
-        eventAPI.saveEvents(events);
+                for (int i = 0; i < events.length(); i++) {
+                    JSONObject eventItem = events.getJSONObject(i);
+
+                    Event event = new Event();
+                    event.setTitle(eventItem.getString(title.toString()));
+                    event.setId(eventItem.getString(Constants.EventEntityAttributes.id.toString()));
+                    event.setVenue(eventItem.getString(Constants.EventEntityAttributes.venue.toString()));
+                    event.setCity(eventItem.getString(Constants.EventEntityAttributes.city.toString()));
+                    event.setCountry(eventItem.getString(Constants.EventEntityAttributes.country.toString()));
+                    event.setDate(eventItem.getString(Constants.EventEntityAttributes.date.toString()));
+
+                    eventList.add(event);
+                }
+
+                eventAPI.saveEvents(eventList);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

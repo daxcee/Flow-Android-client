@@ -1,8 +1,6 @@
 package com.flow.app.Model;
 
 import android.net.ParseException;
-import com.google.gson.annotations.SerializedName;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -10,7 +8,6 @@ import java.util.Locale;
 //https://github.com/srmds/Flow-API/blob/master/models/event.js
 public class Event {
 
-    @SerializedName("_id")
     private String id;
 
     private String date;
