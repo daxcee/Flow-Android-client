@@ -28,6 +28,14 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
         pullTask.execute(params);
     }
 
+    public void pull(final String url) {
+        HTTPClient pullTask = new HTTPClient(this);
+        String[] params = new String[1];
+        params[0] = url;
+
+        pullTask.execute(params);
+    }
+
     @Override
     public void push() {
         //TODO
