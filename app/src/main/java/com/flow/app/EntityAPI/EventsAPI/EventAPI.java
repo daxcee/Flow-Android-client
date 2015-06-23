@@ -45,6 +45,8 @@ public class EventAPI implements EventAPIInterface {
     public void saveEvents(ArrayList<Event> events) {
         SQLiteDatabase db = persistenceManager.getWritableDatabase();
         ContentValues values = new ContentValues();
+        Intent intent = new Intent();
+        intent.setAction(Constants.IntentMessages.replication_finished.toString());
 
         for(Event event:events) {
 
@@ -58,14 +60,10 @@ public class EventAPI implements EventAPIInterface {
             db.insert(EventEntityName, null, values);
 
             Log.e("Saved item: ", event.getTitle());
-
-
         }
-        Intent intent = new Intent();
-        intent.setAction(Constants.IntentMessages.replication_finished.toString());
-        context.sendBroadcast(intent);
 
         db.close();
+        context.sendBroadcast(intent);
     }
 
     @Override

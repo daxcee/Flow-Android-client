@@ -1,6 +1,7 @@
 package com.flow.app.Views;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +14,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.flow.app.EntityAPI.EventsAPI.EventAPI;
+import com.flow.app.Model.Event;
 import com.flow.app.R;
 import com.flow.app.Replicator.RemoteReplicator;
 import com.flow.app.Utils.Constants;
-import com.flow.app.Model.Event;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class MainActivity extends Activity implements ListViewInterface {
     private EventListAdapter eventListAdapter;
     private final String LOG_TAG = "MainActivity";
     private ListView eventListView;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,14 @@ public class MainActivity extends Activity implements ListViewInterface {
         eventAPI = new EventAPI(this);
         replicator = new RemoteReplicator(eventAPI);
         eventArrayList = new ArrayList<Event>(0);
+        progressDialog = new ProgressDialog(MainActivity.this);
 
         initReceivers();
 
         if(eventAPI.getAll().size() == 0){
             Log.d(LOG_TAG, String.format("No local data available, replicating data from remote: %s",
                     Constants.FlowAPIEndpoints.events));
+            setLoadingState();
             pullRemoteData();
         } else {
             eventArrayList = eventAPI.getAll();
@@ -99,6 +103,7 @@ public class MainActivity extends Activity implements ListViewInterface {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            setLoadingState();
             eventAPI.deleteAll();
 
             return true;
@@ -130,15 +135,24 @@ public class MainActivity extends Activity implements ListViewInterface {
     }
 
     @Override
+    public void setLoadingState() {
+        progressDialog.setTitle("Syncing");
+        progressDialog.setMessage("Replicating from remote, hold on tight!");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
     public void refreshListViewData() {
         runOnUiThread(new Runnable() {
             public void run() {
+                progressDialog.cancel();
                 eventArrayList.clear();
                 eventArrayList.addAll(eventAPI.getAll());
                 eventListAdapter.notifyDataSetChanged();
                 eventListView.invalidateViews();
                 eventListView.refreshDrawableState();
-                System.out.println("Total is: " + eventAPI.getAll().size());
+                System.out.println("Total event items: " + eventAPI.getAll().size());
             }
         });
     }
