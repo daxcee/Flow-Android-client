@@ -1,7 +1,7 @@
 #Flow Android client ![](https://circleci.com/gh/srmds/Flow-Android-client/tree/master.svg?style=shield&circle-token=982140173ef2b98794c97ed9cfa17d90cddc17bf)
 
 Android Client that connects and persists data retrieved from the [Flow API](https://github.com/srmds/FlowAPI)
-
+![screenshot eventoverview](http://i.imgur.com/7HR4uCy.png)
 
 ##Prerequisites
 
@@ -11,7 +11,7 @@ Android Client that connects and persists data retrieved from the [Flow API](htt
 	
 [Genymotion 2.4.+](https://www.genymotion.com)
 
-## Google Play Services
+## Google Play Services (for now not mandatory)
 
 In order to have Google Play services available we need to install an ARM translator and a flashed image of Google Apps, since these are not available on Genymotion VM's.
 
