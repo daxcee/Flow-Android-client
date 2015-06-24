@@ -1,5 +1,7 @@
 package com.flow.app.HTTPClient;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import com.flow.app.Replicator.AsyncTaskListener;
 import android.util.Log;
 import java.io.IOException;
@@ -9,9 +11,21 @@ import java.net.URL;
 public class HTTPClient extends AbstractHTTPClient {
 
     private AsyncTaskListener<String> callback;
+    private Context context;
+    private ProgressDialog progressDialog;
 
     public HTTPClient(AsyncTaskListener callback){
         this.callback = callback;
+    }
+    @Override
+    protected void onPreExecute() {
+        progressDialog.setTitle("ET is phoning home");
+        progressDialog.setMessage("Hold on tight, events are retrieved.");
+        progressDialog.setCancelable(false);
+
+        if(!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
     }
 
     @Override
@@ -24,6 +38,9 @@ public class HTTPClient extends AbstractHTTPClient {
             handleResponseCode(getResponseCode());
             result = execute();
 
+            if(!progressDialog.isShowing()) {
+                progressDialog.show();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,7 +53,7 @@ public class HTTPClient extends AbstractHTTPClient {
     @Override
     protected void onPostExecute(String result) {
         if(result != null) {
-            callback.onComplete(result);
+            callback.onComplete(result,progressDialog);
         }
     }
 
@@ -58,6 +75,19 @@ public class HTTPClient extends AbstractHTTPClient {
                 Log.e("status: ", "HTTP errror");
                 break; // abort
         }
+    }
+
+    public void setCaller(Context context){
+        this.context = context;
+        setProgressHandler(context);
+    }
+
+    private void setProgressHandler(Context context){
+        progressDialog = new ProgressDialog(context);
+    }
+
+    public ProgressDialog getProgressHandler(){
+        return progressDialog;
     }
 
 }

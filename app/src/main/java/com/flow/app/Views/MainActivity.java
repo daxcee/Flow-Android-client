@@ -1,7 +1,6 @@
 package com.flow.app.Views;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.flow.app.EntityAPI.EventsAPI.EventAPI;
 import com.flow.app.Model.Event;
 import com.flow.app.R;
-import com.flow.app.Replicator.RemoteReplicator;
 import com.flow.app.Utils.Constants;
 
 import java.util.ArrayList;
@@ -24,30 +23,24 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements ListViewInterface {
 
     private EventAPI eventAPI;
-    private RemoteReplicator replicator;
     private BroadcastReceiver broadcastReceiver;
     private ArrayList<Event> eventArrayList;
     private EventListAdapter eventListAdapter;
     private final String LOG_TAG = "MainActivity";
     private ListView eventListView;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.flow.app.R.layout.activity_main);
         eventAPI = new EventAPI(this);
-        replicator = new RemoteReplicator(eventAPI);
         eventArrayList = new ArrayList<Event>(0);
-        progressDialog = new ProgressDialog(MainActivity.this);
 
         initReceivers();
 
         if(eventAPI.getAll().size() == 0){
             Log.d(LOG_TAG, String.format("No local data available, replicating data from remote: %s",
                     Constants.FlowAPIEndpoints.events));
-            setLoadingState();
-            pullRemoteData();
         } else {
             eventArrayList = eventAPI.getAll();
             Log.d(LOG_TAG, String.format("Local data is available: %d events stored.", eventArrayList.size()));
@@ -74,7 +67,6 @@ public class MainActivity extends Activity implements ListViewInterface {
 
     @Override
     protected void onResume() {
-
         super.onResume();
     }
 
@@ -103,8 +95,8 @@ public class MainActivity extends Activity implements ListViewInterface {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            setLoadingState();
             eventAPI.deleteAll();
+            this.deleteDatabase(Constants.DB_NAME);
 
             return true;
         }
@@ -131,28 +123,22 @@ public class MainActivity extends Activity implements ListViewInterface {
 
     @Override
     public void pullRemoteData() {
-        replicator.pull();
-    }
-
-    @Override
-    public void setLoadingState() {
-        progressDialog.setTitle("Syncing");
-        progressDialog.setMessage("Replicating from remote, hold on tight!");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        eventAPI.getAll();
     }
 
     @Override
     public void refreshListViewData() {
         runOnUiThread(new Runnable() {
             public void run() {
-                progressDialog.cancel();
                 eventArrayList.clear();
                 eventArrayList.addAll(eventAPI.getAll());
                 eventListAdapter.notifyDataSetChanged();
                 eventListView.invalidateViews();
                 eventListView.refreshDrawableState();
-                System.out.println("Total event items: " + eventAPI.getAll().size());
+
+                String message = String.format("Total retrieved & stored Event Items: %d", eventAPI.getAll().size());
+                Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
+                System.out.println(message);
             }
         });
     }

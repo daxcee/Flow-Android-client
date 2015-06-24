@@ -9,7 +9,5 @@ public interface ListViewInterface {
 
     void pullRemoteData();
 
-    void setLoadingState();
-
     void refreshListViewData();
 }

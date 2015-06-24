@@ -1,30 +1,36 @@
 package com.flow.app.Replicator;
 
-import com.flow.app.EntityAPI.EventsAPI.EventAPI;
+import android.app.ProgressDialog;
+import android.content.Context;
+import com.flow.app.EntityAPI.PersistenceManager;
 import com.flow.app.HTTPClient.HTTPClient;
 import com.flow.app.Model.Event;
 import com.flow.app.Utils.Constants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
-import static com.flow.app.Utils.Constants.EventEntityAttributes.title;
 
+import java.util.ArrayList;
+
+import static com.flow.app.Utils.Constants.EventEntityAttributes.title;
 
 public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorInterface {
 
-    private EventAPI eventAPI;
+    private PersistenceManager persistenceManager;
+    private Context context;
+    private HTTPClient pullTask;
 
-    public RemoteReplicator(EventAPI eventAPI){
-        this.eventAPI = eventAPI;
+    public RemoteReplicator(PersistenceManager persistenceManager, Context context){
+        this.persistenceManager = persistenceManager;
+        this.context = context;
     }
 
     @Override
     public void pull() {
-        HTTPClient pullTask = new HTTPClient(this);
+        pullTask = new HTTPClient(this);
         String[] params = new String[1];
         params[0] = Constants.FlowAPIEndpoints.events.toString();
-
+        pullTask.setCaller(context);
         pullTask.execute(params);
     }
 
@@ -42,11 +48,11 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
     }
 
     @Override
-    public void onComplete(String result) {
-        processData(result);
+    public void onComplete(String result, ProgressDialog progressDialog) {
+        processData(result, progressDialog);
     }
 
-    private void processData(String response){
+    private void processData(String response, ProgressDialog progressDialog){
         JSONArray events;
 
         try {
@@ -61,7 +67,7 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
 
                     Event event = new Event();
                     event.setTitle(eventItem.getString(title.toString()));
-                    event.setId(eventItem.getString(Constants.EventEntityAttributes.id.toString()));
+                    event.setId(eventItem.getString(Constants.EventEntityAttributes._id.toString()));
                     event.setVenue(eventItem.getString(Constants.EventEntityAttributes.venue.toString()));
                     event.setCity(eventItem.getString(Constants.EventEntityAttributes.city.toString()));
                     event.setCountry(eventItem.getString(Constants.EventEntityAttributes.country.toString()));
@@ -69,13 +75,19 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
 
                     eventList.add(event);
                 }
-
-                eventAPI.saveEvents(eventList);
+                persistenceManager.setProgresshandler(pullTask.getProgressHandler());
+                persistenceManager.saveEvents(eventList);
             }
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+
+
+
 
 }
