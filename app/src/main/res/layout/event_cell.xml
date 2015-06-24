@@ -11,31 +11,55 @@
 			android:layout_height="match_parent" android:layout_gravity="center_horizontal"
 			android:id="@+id/event_details_placeholder" android:weightSum="1">
 
+
+
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
 		<ImageView
-				android:layout_width="match_parent"
-				android:layout_height="120dp"
-				android:id="@+id/event_cover_imageview" android:src="@mipmap/placeholder_event"
-				android:contentDescription="@string/event_cover_description" android:layout_gravity="top"
-				android:layout_marginTop="-14dp" android:paddingRight="2dp"
-				android:paddingLeft="2dp"/>
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:scaleType="centerCrop"
+				android:adjustViewBounds="true"
+				android:id="@+id/event_cover_imageview"
+				android:contentDescription="@string/event_cover_description"
+				android:src="@mipmap/even_cover_default"/>
+			<ImageView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:scaleType="centerCrop"
+					android:adjustViewBounds="true"
+					android:id="@+id/event_ribbon_imageview"
+					android:contentDescription="@string/event_cover_description"
+					android:src="@mipmap/even_cover_overlay"/>
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:text="20-06-2015"
+					android:id="@+id/event_date_textView"
+					android:textSize="10pt" android:layout_alignParentStart="false" android:autoText="true"
+					android:textStyle="bold" android:textColor="#fffdfffd"
+					android:layout_marginLeft="10dp" android:layout_alignParentBottom="false"
+					android:layout_marginTop="5dp"/>
+
+		</RelativeLayout>
+
 		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Het Transportbedrijf"
-				android:id="@+id/event_venue_textview" android:textSize="12pt" android:textStyle="bold"
-				android:layout_marginLeft="10dp"/>
+				android:text="Transporting state"
+				android:id="@+id/event_title_textview" android:layout_marginLeft="10dp" android:textSize="10pt"
+				android:paddingBottom="10dp" android:textColor="#ff000000"
+				android:textIsSelectable="true" android:layout_marginTop="5dp" android:textStyle="bold"/>
 		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Rotterdam"
-				android:id="@+id/event_city_textview" android:textSize="12pt"
-				android:textIsSelectable="false" android:paddingBottom="15dp" android:textStyle="bold"
-				android:layout_marginLeft="10dp"/>
-		<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="New Text"
-				android:id="@+id/event_title_textview" android:layout_marginLeft="10dp" android:textSize="12pt"
-				android:paddingBottom="10dp"/>
+				android:text="Het Transportbedrijf - Amsterdam"
+				android:id="@+id/event_venue_city_textview"
+				android:layout_marginLeft="10dp" android:textColor="#ff535353"
+				android:textSize="10pt" android:minWidth="720dp" android:layout_marginBottom="15dp"
+				/>
 	</LinearLayout>
 </LinearLayout>

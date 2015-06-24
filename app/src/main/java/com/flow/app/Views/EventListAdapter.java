@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.flow.app.Model.Event;
+
 import java.util.ArrayList;
-import static com.flow.app.R.*;
+
+import static com.flow.app.R.id;
+import static com.flow.app.R.layout;
 
 class EventListAdapter  extends ArrayAdapter<Event> {
 
@@ -29,16 +31,16 @@ class EventListAdapter  extends ArrayAdapter<Event> {
         Event event = getItem(position);
 
         if (event != null) {
-            //TextView eventdate = (TextView) eventCell.findViewById(id.event_date_textview);
+            TextView eventdate = (TextView) eventCell.findViewById(id.event_date_textView);
             TextView evenTitle = (TextView) eventCell.findViewById(id.event_title_textview);
-            TextView eventVenue = (TextView) eventCell.findViewById(id.event_venue_textview);
-            TextView eventCity = (TextView) eventCell.findViewById(id.event_city_textview);
-            ImageView eventImage = (ImageView) eventCell.findViewById(id.event_cover_imageview);
+            TextView eventVenueCity = (TextView) eventCell.findViewById(id.event_venue_city_textview);
 
-            //eventdate.setText(event.getDateStr());
+            //ImageView eventImage = (ImageView) eventCell.findViewById(id.event_cover_imageview);
+
+            eventdate.setText(event.getDateStr());
             evenTitle.setText(event.getTitle());
-            eventVenue.setText(event.getVenue());
-            eventCity.setText(event.getCity());
+            eventVenueCity.setText(event.getVenue() + " - " + event.getCity());
+
         }
 
         return eventCell;

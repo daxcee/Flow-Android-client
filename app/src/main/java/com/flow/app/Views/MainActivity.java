@@ -139,6 +139,7 @@ public class MainActivity extends Activity implements ListViewInterface {
                 String message = String.format("Total retrieved & stored Event Items: %d", eventAPI.getAll().size());
                 Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
                 System.out.println(message);
+
             }
         });
     }
