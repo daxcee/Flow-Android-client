@@ -65,16 +65,19 @@ public class RemoteReplicator implements AsyncTaskListener<String>, ReplicatorIn
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject eventItem = events.getJSONObject(i);
 
-                    Event event = new Event();
-                    event.setTitle(eventItem.getString(title.toString()));
-                    event.setId(eventItem.getString(Constants.EventEntityAttributes._id.toString()));
-                    event.setVenue(eventItem.getString(Constants.EventEntityAttributes.venue.toString()));
-                    event.setCity(eventItem.getString(Constants.EventEntityAttributes.city.toString()));
-                    event.setCountry(eventItem.getString(Constants.EventEntityAttributes.country.toString()));
-                    event.setDate(eventItem.getString(Constants.EventEntityAttributes.date.toString()));
+                    if(!eventItem.getString(Constants.EventEntityAttributes.date.toString()).isEmpty()){
+                        Event event = new Event();
+                        event.setTitle(eventItem.getString(title.toString()));
+                        event.setId(eventItem.getString(Constants.EventEntityAttributes._id.toString()));
+                        event.setVenue(eventItem.getString(Constants.EventEntityAttributes.venue.toString()));
+                        event.setCity(eventItem.getString(Constants.EventEntityAttributes.city.toString()));
+                        event.setCountry(eventItem.getString(Constants.EventEntityAttributes.country.toString()));
+                        event.setDate(eventItem.getString(Constants.EventEntityAttributes.date.toString()));
 
-                    eventList.add(event);
+                        eventList.add(event);
+                    }
                 }
+
                 persistenceManager.setProgresshandler(pullTask.getProgressHandler());
                 persistenceManager.saveEvents(eventList);
             }
