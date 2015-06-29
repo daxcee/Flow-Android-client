@@ -38,11 +38,11 @@ public final class Constants {
 
     private static final String APIHost = "https://flow-api.herokuapp.com";
     private static final String APIBasePath = "/api/v1/";
-    private static final String key = "&apikey=2g1ddDNAF2RKdriuzGVZnZ";
-    private static final String limit = "?limit=3000";
+    private static final String key = "&token=2g1ddDNAF2RKdriuzGVZnZ";
+    private static final String limit = "&limit=3000";
 
     public enum FlowAPIEndpoints {
-        events(APIHost + APIBasePath + "events" + limit+ key),
+        events(APIHost + APIBasePath + "events?sort=date&order=asc" + limit+ key),
         artists(APIHost + APIBasePath + "artists"),
         albums(APIHost + APIBasePath + "albums"),
         tracks(APIHost + APIBasePath + "tracks"),
